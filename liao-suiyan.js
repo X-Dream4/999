@@ -5,8 +5,9 @@
 function renderSuiyan() {
   const header = document.getElementById('suiyan-header');
   if (liaoBgSrc) header.style.backgroundImage = `url(${liaoBgSrc})`;
+  else header.style.backgroundImage = '';
 
-  document.getElementById('suiyan-user-avatar').src  = liaoUserAvatar;
+  document.getElementById('suiyan-user-avatar').src       = liaoUserAvatar;
   document.getElementById('suiyan-user-name').textContent = liaoUserName;
 
   const list = document.getElementById('suiyan-list');
@@ -31,19 +32,26 @@ function buildSuiyanItem(post, idx) {
   let commentsHtml = '';
   if (post.comments && post.comments.length) {
     const rows = post.comments.map(c =>
-      `<div class="suiyan-comment-item"><span class="suiyan-comment-author">${escHtml(c.author)}</span>${escHtml(c.text)}</div>`
+      `<div class="suiyan-comment-item"><span class="suiyan-comment-author">${escHtml(c.author)}：</span>${escHtml(c.text)}</div>`
     ).join('');
     commentsHtml = `<div class="suiyan-comments">${rows}</div>`;
   }
 
+  // 媒体内容（图片等）
+  let mediaHtml = '';
+  if (post.imageUrl) {
+    mediaHtml = `<img src="${escHtml(post.imageUrl)}" style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin-bottom:8px;" alt="">`;
+  }
+
   div.innerHTML = `
     <div class="suiyan-item-header">
-      <img class="suiyan-item-avatar" src="${post.avatar || defaultAvatar()}" alt="">
+      <img class="suiyan-item-avatar" src="${escHtml(post.avatar || defaultAvatar())}" alt="">
       <div class="suiyan-item-meta">
         <div class="suiyan-item-name">${escHtml(post.author)}</div>
         <div class="suiyan-item-time">${formatTime(post.ts)}</div>
       </div>
     </div>
+    ${mediaHtml}
     <div class="suiyan-item-content">${escHtml(post.content)}</div>
     <div class="suiyan-actions">
       <button class="suiyan-action-btn like-btn ${likedByUser ? 'liked' : ''}" data-idx="${idx}">
@@ -70,6 +78,8 @@ function buildSuiyanItem(post, idx) {
     }
     lSave('suiyan', liaoSuiyan);
     renderSuiyan();
+    // 用户点赞后，角色有概率互动
+    if (typeof scheduleRoleInteractSuiyan === 'function') scheduleRoleInteractSuiyan();
   });
 
   div.querySelector('.comment-btn').addEventListener('click', function () {
@@ -167,6 +177,7 @@ document.getElementById('liao-suiyan-bg-file').addEventListener('change', functi
     renderSuiyan();
   };
   reader.readAsDataURL(file);
+  this.value = '';
 });
 
 document.getElementById('liao-suiyan-bg-cancel').addEventListener('click', () => {
@@ -183,12 +194,22 @@ document.getElementById('liao-post-confirm').addEventListener('click', () => {
   const content = document.getElementById('liao-post-content').value.trim();
   if (!content) return;
   liaoSuiyan.push({
-    author: liaoUserName, avatar: liaoUserAvatar, content,
-    ts: Date.now(), likes: 0, likedBy: [], comments: [], isUser: true
+    author:  liaoUserName,
+    avatar:  liaoUserAvatar,
+    content,
+    ts:      Date.now(),
+    likes:   0,
+    likedBy: [],
+    comments:[],
+    isUser:  true
   });
   lSave('suiyan', liaoSuiyan);
   document.getElementById('liao-post-modal').classList.remove('show');
   renderSuiyan();
+  // 发完随言后，角色有概率互动
+  if (typeof scheduleRoleInteractSuiyan === 'function') {
+    setTimeout(scheduleRoleInteractSuiyan, 1500);
+  }
 });
 
 document.getElementById('liao-post-cancel').addEventListener('click', () => {
@@ -208,7 +229,7 @@ function openCommentModal(idx) {
     post.comments.forEach(c => {
       const row = document.createElement('div');
       row.className = 'liao-comment-row';
-      row.innerHTML = `<span class="comment-name">${escHtml(c.author)}</span>${escHtml(c.text)}`;
+      row.innerHTML = `<span class="comment-name">${escHtml(c.author)}：</span>${escHtml(c.text)}`;
       listEl.appendChild(row);
     });
   } else {

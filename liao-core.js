@@ -74,6 +74,15 @@ function removeEmoji(str) {
   ).replace(/[\u2702-\u27B0]/gu, '').trim();
 }
 
+function calcBubbleDelay(text) {
+  const len = (text || '').replace(/\s/g, '').length;
+  if (len <= 2)  return 200;
+  if (len <= 5)  return 500;
+  if (len <= 10) return 900;
+  if (len <= 20) return 1400;
+  return 2000;
+}
+
 /* ---------- 入口绑定 ---------- */
 function bindLiaoEntry() {
   document.querySelectorAll('[data-app="chat"]').forEach(el => {
@@ -105,12 +114,13 @@ function switchLiaoTab(tabId) {
     panel.classList.toggle('active', panel.dataset.panel === tabId);
   });
   if (tabId === 'chatlist') renderChatList();
-  if (tabId === 'rolelib')  renderRoleLib();
+  if (tabId === 'rolelib')  { if (typeof renderRoleLib === 'function') renderRoleLib(); }
   if (tabId === 'suiyan')   renderSuiyan();
 }
 
 document.querySelectorAll('.liao-tab-btn').forEach(btn => {
   btn.addEventListener('click', function () {
+    if (this.id === 'liao-close-btn') return;
     switchLiaoTab(this.dataset.tab);
   });
 });
