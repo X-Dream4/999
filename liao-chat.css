@@ -222,13 +222,15 @@
 
 .chat-msg-row {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 8px;
 }
 
 .chat-msg-row.user-row {
-  flex-direction: row-reverse;
+  flex-direction: row;
+  justify-content: flex-end;
 }
+
 
 .chat-msg-avatar {
   width: 32px;
@@ -239,7 +241,7 @@
   flex-shrink: 0;
   border: 1.5px solid rgba(153,200,237,0.28);
   display: block;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .chat-msg-row:not(.user-row) .chat-msg-bubble {

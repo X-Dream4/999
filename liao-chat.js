@@ -210,22 +210,23 @@ function appendMessageBubble(msg, role, chatUserAvatar, animate) {
   const uAvatar    = chatUserAvatar || liaoUserAvatar;
 
   const row = document.createElement('div');
-  row.className = 'chat-msg-row' + (msg.role === 'user' ? ' user-row' : '');
 
   if (msg.role === 'user') {
+    row.className = 'chat-msg-row user-row';
     row.innerHTML = `
       <div class="chat-msg-bubble">${escHtml(msg.content)}</div>
-      <img class="chat-msg-avatar" src="${uAvatar}" alt="">`;
+      <img class="chat-msg-avatar user-avatar" src="${uAvatar}" alt="">`;
   } else {
+    row.className = 'chat-msg-row';
     row.innerHTML = `
       <img class="chat-msg-avatar" src="${roleAvatar}" alt="">
       <div class="chat-msg-bubble">${escHtml(msg.content)}</div>`;
   }
 
   if (animate) {
-    row.style.opacity   = '0';
-    row.style.transform = 'translateY(8px)';
-    row.style.transition= 'opacity 0.18s ease, transform 0.18s ease';
+    row.style.opacity    = '0';
+    row.style.transform  = 'translateY(8px)';
+    row.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
     area.appendChild(row);
     requestAnimationFrame(() => requestAnimationFrame(() => {
       row.style.opacity   = '1';
@@ -372,7 +373,7 @@ document.getElementById('chat-api-btn').addEventListener('click', async () => {
 
     showTypingIndicator(false);
 
-    const bubbles        = splitIntoBubbles(rawContent);
+    const bubbles         = splitIntoBubbles(rawContent);
     const chatUserAvatar2 = chat.chatUserAvatar || liaoUserAvatar;
 
     let cumulativeDelay = 0;
@@ -482,12 +483,6 @@ function switchChatSettingsTab(tabId) {
 document.querySelectorAll('.cs-tab-btn').forEach(btn => {
   btn.addEventListener('click', function () {
     switchChatSettingsTab(this.dataset.cstab);
-  });
-});
-
-document.querySelectorAll('.cs-accordion-header').forEach(header => {
-  header.addEventListener('click', function () {
-    this.closest('.cs-accordion-item').classList.toggle('open');
   });
 });
 
