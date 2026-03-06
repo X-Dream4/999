@@ -1,0 +1,106 @@
+<!-- ===================== 了了 App 覆盖层 ===================== -->
+<div id="liao-app">
+  <div class="liao-topbar">
+    <button class="liao-tab-btn" id="liao-close-btn" style="flex:none;width:36px;font-size:20px;color:var(--primary);">←</button>
+    <button class="liao-tab-btn active" data-tab="chatlist">
+      <span class="tab-icon">□</span>聊天
+    </button>
+    <button class="liao-tab-btn" data-tab="rolelib">
+      <span class="tab-icon">○</span>角色库
+    </button>
+    <button class="liao-tab-btn" data-tab="myhome">
+      <span class="tab-icon">△</span>我的
+    </button>
+    <button class="liao-tab-btn" data-tab="suiyan">
+      <span class="tab-icon">◇</span>随言
+    </button>
+  </div>
+
+  <div class="liao-main">
+    <!-- 聊天列表面板 -->
+    <div class="liao-panel active" data-panel="chatlist">
+      <div class="chat-list-wrap">
+        <div id="liao-chat-list"></div>
+      </div>
+      <div class="chat-bottom-bar">
+        <button class="chat-bar-btn" id="liao-btn-new-role">
+          <span class="bar-btn-icon">+</span>
+          新建角色
+        </button>
+        <button class="chat-bar-btn" id="liao-btn-new-group">
+          <span class="bar-btn-icon">▣</span>
+          新建群聊
+        </button>
+        <button class="chat-bar-btn" id="liao-btn-import">
+          <span class="bar-btn-icon">▲</span>
+          导入角色
+        </button>
+      </div>
+    </div>
+
+    <!-- 角色库面板 -->
+    <div class="liao-panel" data-panel="rolelib">
+      <div class="role-lib-wrap">
+        <div class="role-grid" id="liao-role-grid"></div>
+        <div class="role-lib-count" id="liao-role-count">共 0 个角色</div>
+      </div>
+    </div>
+
+    <!-- 我的主页面板 -->
+    <div class="liao-panel" data-panel="myhome">
+      <div class="my-home-wrap">
+        <div class="my-home-menu">
+          <div class="my-menu-item">
+            <div class="my-menu-icon">◈</div>
+            <div class="my-menu-info">
+              <div class="my-menu-title">我的人设库</div>
+              <div class="my-menu-sub">管理你的角色设定与人物档案</div>
+            </div>
+            <div class="my-menu-arrow">›</div>
+          </div>
+          <div class="my-menu-item">
+            <div class="my-menu-icon">★</div>
+            <div class="my-menu-info">
+              <div class="my-menu-title">收藏夹</div>
+              <div class="my-menu-sub">保存喜欢的对话片段</div>
+            </div>
+            <div class="my-menu-arrow">›</div>
+          </div>
+          <div class="my-menu-item">
+            <div class="my-menu-icon">◎</div>
+            <div class="my-menu-info">
+              <div class="my-menu-title">记忆宫殿</div>
+              <div class="my-menu-sub">角色的长期记忆与世界观设定</div>
+            </div>
+            <div class="my-menu-arrow">›</div>
+          </div>
+          <div class="my-menu-item">
+            <div class="my-menu-icon">◆</div>
+            <div class="my-menu-info">
+              <div class="my-menu-title">美化</div>
+              <div class="my-menu-sub">自定义聊天背景与气泡样式</div>
+            </div>
+            <div class="my-menu-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 随言面板 -->
+    <div class="liao-panel" data-panel="suiyan">
+      <div class="suiyan-wrap">
+        <div class="suiyan-header" id="suiyan-header">
+          <button class="suiyan-header-bg-btn" id="suiyan-bg-btn">更换背景</button>
+        </div>
+        <div class="suiyan-user-row">
+          <img class="suiyan-user-avatar" id="suiyan-user-avatar"
+            src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=user" alt="" style="cursor:pointer;">
+          <div class="suiyan-user-name" id="suiyan-user-name" style="cursor:pointer;">用户</div>
+          <button class="suiyan-post-btn" id="suiyan-post-btn" title="发随言">+</button>
+        </div>
+        <div class="suiyan-list" id="suiyan-list"></div>
+      </div>
+    </div>
+
+  </div><!-- /liao-main -->
+</div><!-- /liao-app -->

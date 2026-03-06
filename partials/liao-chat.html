@@ -1,0 +1,171 @@
+<!-- ===================== 聊天界面（独立全屏） ===================== -->
+<div id="liao-chat-view">
+  <div class="chat-view-topbar">
+    <button class="chat-view-back" id="chat-view-back">←</button>
+    <div class="chat-view-title" id="chat-view-title">聊天</div>
+    <button class="chat-settings-open-btn" id="chat-settings-open-btn" title="聊天设置">···</button>
+  </div>
+  <div class="chat-typing-indicator" id="chat-typing">
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  </div>
+  <div class="chat-messages-area" id="liao-chat-messages"></div>
+  <div class="chat-view-inputbar">
+    <input class="chat-view-input" id="chat-view-input"
+      type="text" placeholder="说点什么…" autocomplete="off">
+    <button class="chat-view-placeholder-btn" id="chat-send-btn" title="发送">↑</button>
+    <button class="chat-view-api-btn" id="chat-api-btn" title="AI回复">AI</button>
+  </div>
+</div>
+
+<!-- ===================== 聊天设置界面（全屏） ===================== -->
+<div id="liao-chat-settings">
+  <div class="cs-topbar">
+    <button class="cs-close-btn" id="cs-close-btn">←</button>
+    <div class="cs-topbar-title">聊天设置</div>
+  </div>
+  <div class="cs-tabs">
+    <button class="cs-tab-btn active" data-cstab="cs-tab-role">角色设置</button>
+    <button class="cs-tab-btn" data-cstab="cs-tab-schedule">角色日程</button>
+    <button class="cs-tab-btn" data-cstab="cs-tab-memory">角色记忆</button>
+  </div>
+
+  <div class="cs-pages-wrap">
+
+    <!-- 第一页：角色设置 -->
+    <div class="cs-page active" id="cs-tab-role-page">
+      <div class="cs-page-scroll">
+
+        <div class="cs-accordion-item">
+          <div class="cs-accordion-header">
+            <span>角色信息</span>
+            <span class="cs-accordion-arrow">›</span>
+          </div>
+          <div class="cs-accordion-body">
+            <div class="liao-avatar-preview-row">
+              <img class="liao-avatar-preview" id="cs-role-avatar-preview"
+                src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=default" alt="">
+              <div class="liao-avatar-upload-btns">
+                <input class="liao-modal-input" id="cs-role-avatar-url" placeholder="头像 URL…">
+                <button class="liao-avatar-btn" id="cs-role-avatar-local-btn">本地上传</button>
+                <input type="file" id="cs-role-avatar-file" accept="image/*" style="display:none;">
+              </div>
+            </div>
+            <label class="liao-modal-label">角色备注名</label>
+            <input class="liao-modal-input" id="cs-role-nickname" placeholder="备注名…">
+            <label class="liao-modal-label">角色真名</label>
+            <input class="liao-modal-input" id="cs-role-realname" placeholder="真实名字…">
+            <label class="liao-modal-label">角色设定</label>
+            <textarea class="liao-modal-textarea" id="cs-role-setting"
+              placeholder="角色性格、背景、说话方式…" style="min-height:100px;"></textarea>
+            <div style="margin-top:12px;">
+              <button class="liao-btn-primary" id="cs-role-save-btn" style="width:100%;">保存角色设置</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-accordion-item">
+          <div class="cs-accordion-header">
+            <span>此聊天用户设置</span>
+            <span class="cs-accordion-arrow">›</span>
+          </div>
+          <div class="cs-accordion-body">
+            <div class="liao-avatar-preview-row">
+              <img class="liao-avatar-preview" id="cs-user-avatar-preview"
+                src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=user" alt="">
+              <div class="liao-avatar-upload-btns">
+                <input class="liao-modal-input" id="cs-user-avatar-url" placeholder="头像 URL…">
+                <button class="liao-avatar-btn" id="cs-user-avatar-local-btn">本地上传</button>
+                <input type="file" id="cs-user-avatar-file" accept="image/*" style="display:none;">
+              </div>
+            </div>
+            <label class="liao-modal-label">用户名字</label>
+            <input class="liao-modal-input" id="cs-user-name" placeholder="用户名…">
+            <label class="liao-modal-label">用户设定</label>
+            <textarea class="liao-modal-textarea" id="cs-user-setting"
+              placeholder="用户的身份、性格、与角色的关系…" style="min-height:80px;"></textarea>
+            <div style="margin-top:12px;">
+              <button class="liao-btn-primary" id="cs-user-save-btn" style="width:100%;">保存用户设置</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-accordion-item">
+          <div class="cs-accordion-header">
+            <span>聊天美化</span>
+            <span class="cs-accordion-arrow">›</span>
+          </div>
+          <div class="cs-accordion-body">
+            <label class="liao-modal-label">角色气泡颜色</label>
+            <div class="cs-color-row">
+              <input type="color" id="cs-role-bubble-color" value="#ffffff" class="cs-color-input">
+              <span class="cs-color-label">角色消息背景色</span>
+            </div>
+            <label class="liao-modal-label">用户气泡颜色</label>
+            <div class="cs-color-row">
+              <input type="color" id="cs-user-bubble-color" value="#99C8ED" class="cs-color-input">
+              <span class="cs-color-label">用户消息背景色</span>
+            </div>
+            <label class="liao-modal-label">角色气泡圆角（px）</label>
+            <input class="liao-modal-input" id="cs-role-bubble-radius" type="number" min="0" max="30" value="16">
+            <label class="liao-modal-label">用户气泡圆角（px）</label>
+            <input class="liao-modal-input" id="cs-user-bubble-radius" type="number" min="0" max="30" value="16">
+            <label class="liao-modal-label">字体大小（px）</label>
+            <input class="liao-modal-input" id="cs-font-size" type="number" min="10" max="22" value="13.5">
+            <label class="liao-modal-label">自定义气泡 CSS</label>
+            <textarea class="liao-modal-textarea" id="cs-custom-css"
+              placeholder="在此输入自定义 CSS，例如：&#10;.chat-msg-bubble { font-weight: bold; }"
+              style="min-height:80px;font-family:monospace;font-size:12px;"></textarea>
+            <div style="margin-top:12px;display:flex;gap:10px;">
+              <button class="liao-btn-primary" id="cs-beauty-save-btn" style="flex:1;">确定</button>
+              <button class="liao-btn-ghost" id="cs-beauty-reset-btn" style="flex:1;">重置</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-accordion-item">
+          <div class="cs-accordion-header">
+            <span>消息数量设置</span>
+            <span class="cs-accordion-arrow">›</span>
+          </div>
+          <div class="cs-accordion-body">
+            <label class="liao-modal-label">AI 可读取的消息数量（0 为无限）</label>
+            <input class="liao-modal-input" id="cs-max-api-msgs" type="number" min="0" value="0" placeholder="0">
+            <div style="font-size:11px;color:var(--text-light);margin-top:4px;line-height:1.6;">
+              设置为 0 时 AI 读取全部历史消息；设置具体数字则只读取最近 N 条。
+            </div>
+            <label class="liao-modal-label" style="margin-top:14px;">界面加载的消息数量</label>
+            <input class="liao-modal-input" id="cs-max-load-msgs" type="number" min="10" value="50" placeholder="50">
+            <div style="font-size:11px;color:var(--text-light);margin-top:4px;line-height:1.6;">
+              聊天界面默认加载最近 N 条消息，往上翻到顶部可继续加载更早的消息。
+            </div>
+            <div style="margin-top:12px;">
+              <button class="liao-btn-primary" id="cs-msgs-save-btn" style="width:100%;">保存</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 第二页：角色日程（待开发） -->
+    <div class="cs-page" id="cs-tab-schedule-page">
+      <div class="cs-page-scroll cs-coming-soon">
+        <div class="cs-coming-soon-icon">◷</div>
+        <div class="cs-coming-soon-text">角色日程</div>
+        <div class="cs-coming-soon-sub">功能建设中，敬请期待</div>
+      </div>
+    </div>
+
+    <!-- 第三页：角色记忆（待开发） -->
+    <div class="cs-page" id="cs-tab-memory-page">
+      <div class="cs-page-scroll cs-coming-soon">
+        <div class="cs-coming-soon-icon">◎</div>
+        <div class="cs-coming-soon-text">角色记忆</div>
+        <div class="cs-coming-soon-sub">功能建设中，敬请期待</div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /liao-chat-settings -->
